@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace ShadyConsole
 {
@@ -9,6 +10,9 @@ namespace ShadyConsole
         {
             // 1. Let the user input a path to a folder, i.e. c:\my-folder\files (if the user prints 'exit' or 'quit', end the program)
 
+            Console.Write("Path: ");
+            string path = Console.ReadLine(); // Fråga användaren efter en path och spara den i en sträng (string är en datatyp som innehåller "text")
+
             /* 2. Complete the class called UserFolder so it contains: 
                     - a string with the path the user entered
                     - a bool if the folder exists or not
@@ -16,7 +20,16 @@ namespace ShadyConsole
                     - the class should be able to return the number of files as well.
             */
 
-            // 3. The instance of the class UserFolder should be stored in a local variable
+            // Steg 1: ----> Scrolla ner och titta på class UserFolder, en klass är ett objekt för att gruppera variabler och logik (metoder).
+
+            // --------- FORTSÄTTNING ------------
+            // Steg 2 efter att steg 1 är klart.
+            UserFolder myFolder = new UserFolder(path);
+
+            // Nu kan vi testa om vår instans fungerar,
+            Console.WriteLine(myFolder.Path); // <--- Skriver ut sökvägen
+            Console.WriteLine(myFolder.Exists); // <--- Skriver True om sökvägen finns annars skriver den False
+
 
             // 4. If no files was found, print a message to the console letting the user know that. Then skip the rest of the steps and start at 1.
 
@@ -31,9 +44,25 @@ namespace ShadyConsole
         class UserFolder
         {
             // The only constructor for this class
-            public UserFolder(string path)
+            public UserFolder(string path) // <--- Tar emot ett argument som ska vara av typen string
             {
-                // 
+                // Det här är en konstruktor som tar emot en parameter, "path", tanken är att skapa en instans av det här objektet.
+                // För att skapa en instans av en klass används konstruktorn för att konstruera objektet, exempelvis:
+                // var folder = new UserFolder("c:\test");
+                // Vi har nu en instans av UserFolder som heter "folder". Vill vi skapa ett till objekt gör vi så här,
+                // var folder2 = new UserFolder("c:\test2");
+                // Nu finns det två instanser av den här klassen.
+
+                // I uppgiften stod det att vi skulle se till att klassen håller koll på den path som användaren matat in. Förslag,
+                Path = path; // Path (med stort P) ser du 3 rader ner och path (med litet p) är det vi får in som argument till konstruktorn. Se högre upp.
+
+                // Nästa steg var att låta klassen hålla koll på om sökvägen (path) finns, vi antar att det är en mapp.
+                var exists = Directory.Exists(Path);
+                Exists = exists; // <--- Spara true eller false i Exists
+                // För att spara kod att skriva hade vi kunnat skriva
+                Exists = Directory.Exists(path); // <--- Här använder jag path med litet p, det innehåller samma värde som Path eftersom vi sparade path till Path på rad 50.
+
+                // Scrolla upp och fortsätt läs.
             }
 
             public string Path { get; private set; }
